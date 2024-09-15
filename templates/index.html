@@ -1,0 +1,157 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<link href="{% static 'assets/css/main.css' %}" rel="stylesheet">
+
+{% block title %} <title>OzozBobo &mdash; Business Show Case OZOD 2022</title>{% endblock %}
+
+
+{% block blockmain %}
+<!-- Slider Section -->
+<section id="slider" class="slider section dark-background">
+  <div class="container" data-aos="fade-up" data-aos-delay="100">
+    <div class="swiper init-swiper">
+      <script type="application/json" class="swiper-config">
+        {
+          "loop": true,
+          "speed": 600,
+          "autoplay": {
+            "delay": 5000
+          },
+          "slidesPerView": "auto",
+          "centeredSlides": true,
+          "pagination": {
+            "el": ".swiper-pagination",
+            "type": "bullets",
+            "clickable": true
+          },
+          "navigation": {
+            "nextEl": ".swiper-button-next",
+            "prevEl": ".swiper-button-prev"
+          }
+        }
+      </script>
+
+      <div class="swiper-wrapper">
+        <!-- Loop through blogs_with_images -->
+        {% for item in blogs_with_images %}
+        <div class="swiper-slide" style="background-image: url('{{ item.images.image.url }}'); background-size: cover; background-position: center;">
+          <div class="content">
+            <h2><a href="{% url 'detail-blog' item.blog.id %}">{{ item.blog.title }}</a></h2>
+            <p>{{ item.blog.description|truncatechars:200  }}</p>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+
+      <div class="swiper-button-next"></div>
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-pagination"></div>
+    </div>
+  </div>
+</section>
+
+<!-- Blog Posts Section -->
+          <section id="blog-posts" class="blog-posts section">
+
+            <div class="container">
+              <div class="row gy-4">
+				{% for item_nine in new_nine_blogs %}
+                <div class="col-lg-6">
+                  <article class="position-relative h-100">
+
+                    <div class="post-img position-relative overflow-hidden" style="height: 300px;">
+                    <img src="{{ item_nine.images.image.url }}" class="img-fluid h-100 w-100" style="object-fit: cover;" alt="no image">
+                    <span class="post-date">{{ item_nine.blog.created_at|date:'Y-m-d' }}</span>
+                  </div>
+
+                    <div class="post-content d-flex flex-column">
+
+                      <h3 class="post-title">{{ item_nine.blog.title }}</h3>
+
+                      <div class="meta d-flex align-items-center">
+                        <div class="d-flex align-items-center">
+                          <i class="bi bi-person"></i> <span class="ps-2">Ozod Y.</span>
+                        </div>
+                        <span class="px-3 text-black-50">/</span>
+                        <div class="d-flex align-items-center">
+                            {% if item_nine.blog.category.exists %}
+							{% for cat in item_nine.blog.category.all %}
+							  <i class="bi bi-folder2"></i> <span class="ps-2">{{ cat.name }}</span>
+							{% endfor %}
+						  {% else %}
+							<span>No categories</span>
+						  {% endif %}
+                        </div>
+                        <span class="px-3 text-black-50">/</span>
+                        <div class="d-flex align-items-center">
+                          <i class="bi bi-eye"></i> <span class="ps-2">{{ item_nine.blog.is_seen }}</span>
+                        </div>
+                      </div>
+
+                      <p>
+                        {{ item_nine.blog.description|truncatechars:200 }}
+                      </p>
+
+                      <hr>
+
+                      <a href="{% url 'detail-blog' item_nine.blog.id %}" class="readmore stretched-link"><span>Davomi...</span><i class="bi bi-arrow-right"></i></a>
+
+                    </div>
+
+                  </article>
+                </div><!-- End post list item -->
+				{% endfor %}
+
+
+              </div>
+            </div>
+
+          </section><!-- /Blog Posts Section -->
+
+<!-- About Section -->
+    <section id="about" class="about section">
+
+      <div class="container">
+
+        <div class="row gy-4">
+
+          <div class="col-lg-6 content" data-aos="fade-up" data-aos-delay="100">
+            <p class="who-we-are">"Ozodbobo" - Business Show Case OZOD 2022</p>
+            <h3>Tadbirkorlik foaliyatizni rivojlantirmoqchimisiz!</h3>
+            <p class="fst-italic">
+              Biz va bizning jamoamiz bilan sizning tadbirkorligingizni rivojlantiramiz va uni omaga ko'rsatib beramiz.
+              Biz "Business Show Case" jamoam sizni albatta kutib qolamiz. Bizning qo'limizdan kelishi mumkin bo'lgan ishlar.
+            </p>
+            <h3>Quydagilar: </h3>
+            <ul>
+              <li><i class="bi bi-check-circle"></i> <span>Sizning tadbirkorligingiz uchun "Ijtimoiy tarmoqda saytingizni yaratib beramiz". </span></li>
+              <li><i class="bi bi-check-circle"></i> <span>Sizning tadbirkorligingizni targ'ibot qilib beramiz</span></li>
+              <li><i class="bi bi-check-circle"></i> <span>Sizning mahsulotingizni sotib olish, sotish va korxonangiz uchun mijozlarni jalb etamiz.</span></li>
+              <li><i class="bi bi-check-circle"></i> <span>Marketing va ijtimoiy tarmoqlaringizni yo'lga qo'yamiz.</span></li>
+            </ul>
+          </div>
+
+          <div class="col-lg-6 about-images" data-aos="fade-up" data-aos-delay="200">
+            <div class="row gy-4">
+              <div class="col-lg-6" style="margin-top: 6rem;">
+                <img src="{% static 'bobo/12.jpg' %}" class="img-fluid zoom-in" alt="">
+              </div>
+              <div class="col-lg-6">
+                <div class="row gy-4">
+                  <div class="col-lg-12">
+                    <img src="{% static 'bobo/456.jpg' %}" class="img-fluid zoom-in" alt="">
+                  </div>
+                  <div class="col-lg-12">
+                    <img src="{% static 'bobo/1245.jpg' %}" class="img-fluid zoom-in" alt="">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section><!-- /About Section -->
+{% endblock %}

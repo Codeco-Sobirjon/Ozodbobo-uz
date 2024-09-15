@@ -1,0 +1,318 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} <title>OzozBobo &mdash; Business Show Case OZOD 2022 </title>{% endblock %}
+<link rel="stylesheet" href="{% static 'assets/css/slider.css' %}">
+<style>
+  .carousel-item {
+  height: 400px; /* Adjust the height as needed */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.carousel-img {
+  height: 50%;
+  object-fit: cover; /* Ensures the image covers the container while maintaining its aspect ratio */
+  width: 100%;
+}
+
+/* Optional: Adjust height for different screen sizes */
+@media (max-width: 768px) {
+  .carousel-item {
+    height: 300px; /* Adjust height for smaller screens */
+  }
+}
+
+@media (max-width: 576px) {
+  .carousel-item {
+    height: 200px; /* Further adjust for extra small screens */
+  }
+}
+</style>
+
+{% block blockmain %}
+
+
+<main class="main">
+    <div class="container">
+      <div class="row">
+
+        <div class="col-lg-8">
+
+          <!-- Blog Details Section -->
+          <section id="blog-details" class="blog-details section">
+            <div class="container">
+
+              <article class="article">
+
+                <div class="post-img">
+                  <img src="{{ images.image.url }}" alt="" class="img-fluid w-100" >
+                </div>
+
+                <h2 class="title"> {{ blog.title }}</h2>
+
+                <div class="meta-top">
+                  <ul>
+<!--                    <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a href="blog-details.html"></a></li>-->
+                    <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a href="blog-details.html"><time datetime="2020-01-01"> {{ blog.created_at|date:"Y-m-d" }}</time></a></li>
+                    <li class="d-flex align-items-center"><i class="bi bi-eye"></i>  <a href="blog-details.html">{{ blog.is_seen }}</a></li>
+                  </ul>
+                </div><!-- End meta top -->
+
+                <div class="content">
+                  <p>
+                     {{ blog.description }}
+                  </p>
+                  <blockquote>
+                    <p>
+                      Biz va bizning jamoamiz bilan sizning tadbirkorligingizni rivojlantiramiz va uni omaga ko'rsatib beramiz.
+                      Biz "Business Show Case" jamoam sizni albatta kutib qolamiz. Bizning qo'limizdan kelishi mumkin bo'lgan ishlar.
+                    </p>
+                  </blockquote>
+                  <section id="slider" class="slider section dark-background">
+  <div class="container" data-aos="fade-up" data-aos-delay="100">
+    <div class="swiper init-swiper">
+      <script type="application/json" class="swiper-config">
+        {
+          "loop": true,
+          "speed": 600,
+          "autoplay": {
+            "delay": 5000
+          },
+          "slidesPerView": "auto",
+          "centeredSlides": true,
+          "pagination": {
+            "el": ".swiper-pagination",
+            "type": "bullets",
+            "clickable": true
+          },
+          "navigation": {
+            "nextEl": ".swiper-button-next",
+            "prevEl": ".swiper-button-prev"
+          }
+        }
+      </script>
+
+      <div class="swiper-wrapper">
+        <!-- Loop through blogs_with_images -->
+        {% for item in images %}
+        <div class="swiper-slide" style="background-image: url('{{ item.image.url }}'); background-size: cover; background-position: center;">
+
+        </div>
+        {% endfor %}
+      </div>
+
+      <div class="swiper-button-next"></div>
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-pagination"></div>
+    </div>
+  </div>
+</section>
+
+                <div class="meta-bottom">
+                  <i class="bi bi-folder"></i>
+                  <ul class="cats">
+                    {% if blog.category.exists %}
+							{% for cat in blog.category.all %}
+                      <span class="ps-2">{{ cat.name }}</span>
+							{% endfor %}
+						  {% else %}
+							<span>No categories</span>
+						  {% endif %}
+
+                  </ul>
+
+                  <i class="bi bi-chat-dots"></i>
+                  <ul class="tags">
+                    <li>{{blog_comment_count}}</li>
+                  </ul>
+                </div><!-- End meta bottom -->
+
+              </article>
+
+            </div>
+          </section><!-- /Blog Details Section -->
+
+
+          <!-- Blog Comments Section -->
+          <section id="blog-comments" class="blog-comments section">
+
+            <div class="container">
+
+              <h4 class="comments-count"><span>{{blog_comment_count}}</span> Kommentariyalar</h4>
+              {% for com in blog_comment %}
+              <div id="comment-1" class="comment">
+                <div class="d-flex">
+                  <div class="comment-img"><img src="assets/img/blog/comments-1.jpg" alt=""></div>
+                  <div>
+                    <h5><a href="#">{{ com.full_name }}</a> <a href="#" class="reply"></a></h5>
+                    <time datetime="2020-01-01">{{ com.created_at|date:"Y-m-d" }}</time>
+                    <p>
+                      {{ com.comment }}
+                    </p>
+                  </div>
+                </div>
+              </div><!-- End comment #1 -->
+              {% endfor %}
+            </div>
+
+          </section><!-- /Blog Comments Section -->
+
+          <!-- Comment Form Section -->
+          <section id="comment-form" class="comment-form section">
+            <div class="container">
+
+              <form action="{% url 'comment-blog' blog.id %}" method="post">
+                    {% csrf_token %}
+                <h4>Kommentariya yozish</h4>
+                <p>Sizning elektron pochta manzilingiz nashr etilmaydi. Majburiy maydonlar belgilangan *</p>
+                <div class="row">
+                  <div class="col-md-6 form-group">
+                    <input name="name" type="text" class="form-control" placeholder="To'liq ism va familiya*">
+                  </div>
+                  <div class="col-md-6 form-group">
+                    <input name="text" type="text" class="form-control" placeholder="Telefon raqam*">
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col form-group">
+                    <textarea name="comment" class="form-control" placeholder="Xabar yozish*"></textarea>
+                  </div>
+                </div>
+
+                <div class="text-center">
+                  <button type="submit" class="btn btn-primary">Komment jo'natish</button>
+                </div>
+
+              </form>
+
+            </div>
+          </section><!-- /Comment Form Section -->
+
+        </div>
+
+        <div class="col-lg-4 sidebar">
+
+          <div class="widgets-container">
+
+            <!-- Blog Author Widget -->
+            <div class="blog-author-widget widget-item">
+
+              <div class="d-flex flex-column align-items-center">
+                <div class="d-flex align-items-center w-100">
+                  <img src="assets/img/blog/blog-author.jpg" class="rounded-circle flex-shrink-0" alt="">
+                  <div>
+                    <h4>Ozod Yuliyev</h4>
+                    <div class="social-links">
+                      <a href="https://www.instagram.com/ozod_yuliyev/" target="_blank" class="instagram"><i class="bi bi-instagram"></i></a>
+                      <a href="https://facebook.com/people/%D0%9E%D0%B7%D0%BE%D0%B4-%D0%AE%D0%BB%D0%B8%D0%B5%D0%B2/pfbid02ELdZQMQCjGLuQzP9Kyn8GNWu4E1v437TgHd9B9rQUdQLxubDCfvWkj7czjWbqYSNl/?mibextid=qi2Omg&rdid=Ep5IjMszOKDBh0Y5&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F2G19uhgQfuixJ2JN%2F%3Fmibextid%3Dqi2Omg"  target="_blank" class="facebook"><i class="bi bi-facebook"></i></a>
+                      <a href="https://www.youtube.com/@ozodbobouz" target="_blank" class="youtube"><i class="bi bi-youtube"></i></a>
+                      <a href="https://t.me/ozodolimovich" target="_blank" class="telegram"><i class="bi bi-telegram"></i></a>
+                    </div>
+                  </div>
+                </div>
+
+                <p>
+                  Agar maqsadingiz sizni har daqiqa ruhlantirmasa va quvontirmasa, hammadan kech uxlab va hammadan erta turib ishlashga majburlamasa hamda hamisha unga erishish uchun sizga ishonch bag'ishlamasa, u sizning haqiqiy orzuingiz emas
+                </p>
+
+              </div>
+
+            </div><!--/Blog Author Widget -->
+
+<!--            &lt;!&ndash; Search Widget &ndash;&gt;-->
+<!--            <div class="search-widget widget-item">-->
+
+<!--              <h3 class="widget-title">Search</h3>-->
+<!--              <form action="">-->
+<!--                <input type="text">-->
+<!--                <button type="submit" title="Search"><i class="bi bi-search"></i></button>-->
+<!--              </form>-->
+
+<!--            </div>&lt;!&ndash;/Search Widget &ndash;&gt;-->
+
+            <!-- Recent Posts Widget -->
+            <div class="recent-posts-widget widget-item">
+
+              <h3 class="widget-title">So'ngi bloglar</h3>
+              {% for last in last_blog %}
+              <div class="post-item">
+                <img src="{{ last.images.image.url }}" alt="" class="flex-shrink-0">
+                <div>
+                  <h4><a href="{% url 'detail-blog' last.blog.id %}">{{ last.blog.title }}</a></h4>
+                  <time datetime="2020-01-01">{{ last.blog.created_at|date:"Y-m-d" }}</time>
+                </div>
+              </div><!-- End recent post item-->
+              {% endfor %}
+            </div><!--/Recent Posts Widget -->
+
+            <!-- Tags Widget -->
+            <div class="tags-widget widget-item">
+
+              <h3 class="widget-title">Kategoriyalar</h3>
+              <ul>
+                {% for cat in categories %}
+                <li><a href="{% url 'category' cat.id %}">{{ cat.name }}</a></li>
+                {% endfor %}
+
+              </ul>
+
+            </div><!--/Tags Widget -->
+
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+<!-- About Section -->
+    <section id="about" class="about section">
+
+      <div class="container">
+
+        <div class="row gy-4">
+
+          <div class="col-lg-6 content" data-aos="fade-up" data-aos-delay="100">
+            <p class="who-we-are">"Ozodbobo" - Business Show Case OZOD 2022</p>
+            <h3>Tadbirkorlik foaliyatizni rivojlantirmoqchimisiz!</h3>
+            <p class="fst-italic">
+              Biz va bizning jamoamiz bilan sizning tadbirkorligingizni rivojlantiramiz va uni omaga ko'rsatib beramiz.
+              Biz "Business Show Case" jamoam sizni albatta kutib qolamiz. Bizning qo'limizdan kelishi mumkin bo'lgan ishlar.
+            </p>
+            <h3>Quydagilar: </h3>
+            <ul>
+              <li><i class="bi bi-check-circle"></i> <span>Sizning tadbirkorligingiz uchun "Ijtimoiy tarmoqda saytingizni yaratib beramiz". </span></li>
+              <li><i class="bi bi-check-circle"></i> <span>Sizning tadbirkorligingizni targ'ibot qilib beramiz</span></li>
+              <li><i class="bi bi-check-circle"></i> <span>Sizning mahsulotingizni sotib olish, sotish va korxonangiz uchun mijozlarni jalb etamiz.</span></li>
+              <li><i class="bi bi-check-circle"></i> <span>Marketing va ijtimoiy tarmoqlaringizni yo'lga qo'yamiz.</span></li>
+            </ul>
+          </div>
+
+          <div class="col-lg-6 about-images" data-aos="fade-up" data-aos-delay="200">
+            <div class="row gy-4">
+              <div class="col-lg-6" style="margin-top: 6rem;">
+                <img src="{% static 'bobo/12.jpg' %}" class="img-fluid zoom-in" alt="">
+              </div>
+              <div class="col-lg-6">
+                <div class="row gy-4">
+                  <div class="col-lg-12">
+                    <img src="{% static 'bobo/456.jpg' %}" class="img-fluid zoom-in" alt="">
+                  </div>
+                  <div class="col-lg-12">
+                    <img src="{% static 'bobo/1245.jpg' %}" class="img-fluid zoom-in" alt="">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section><!-- /About Section -->
+{% endblock %}
