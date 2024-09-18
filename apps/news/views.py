@@ -80,6 +80,7 @@ def categoryPageView(request, id):
 
 def detailPageView(request, id):
     blog_detail = get_object_or_404(Blog, id=id)
+
     blog_detail.is_seen += 1
     blog_detail.save()
     blog_images = BlogImage.objects.filter(blog=blog_detail)
@@ -101,7 +102,8 @@ def detailPageView(request, id):
         'blog_comment_count': blog_comment_count,
         'categories': categories,
         'last_blog': last_blog,
-        'blog_comment': blog_comment
+        'blog_comment': blog_comment,
+        'video_url': blog_detail.video
     }
     return render(request, 'detail.html', context)
 

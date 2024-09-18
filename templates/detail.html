@@ -62,15 +62,31 @@
                 </div><!-- End meta top -->
 
                 <div class="content">
-                  <p>
-                     {{ blog.description }}
-                  </p>
-                   <div class="meta-section">
-    <a href="{{ blog.url }}" target="_blank" class="blog-url-link">
-      <i class="bi bi-link"></i> <!-- Change to a link icon if necessary -->
-      {{ blog.url }}
-    </a>
+  <p>
+    {{ blog.description }}
+  </p>
+                  <div class="container mt-3">
+  <div class="row align-items-center">
+    <div class="col d-flex align-items-center">
+      <i class="bi bi-link me-2"></i> <!-- Link icon with right margin -->
+      <a href="{{ blog.url }}" target="_blank" class="blog-url-link">
+        {{ blog.url }}
+      </a>
+    </div>
+    <div class="col d-flex align-items-center">
+      <i class="bi bi-film me-2"></i> <!-- Film icon with right margin -->
+      {% if video_url %}
+        <a href="{{ video_url }}" class="video-link">Videoni ko'rish</a>
+      {% else %}
+        <!-- No video available -->
+        <span>No video available</span>
+      {% endif %}
+    </div>
   </div>
+</div>
+
+
+
                   <blockquote>
                     <p>
                       Biz va bizning jamoamiz bilan sizning tadbirkorligingizni rivojlantiramiz va uni omaga ko'rsatib beramiz.
@@ -108,6 +124,7 @@
 
         </div>
         {% endfor %}
+
       </div>
 
       <div class="swiper-button-next"></div>
@@ -115,15 +132,8 @@
       <div class="swiper-pagination"></div>
     </div>
   </div>
-                    <div class="container mt-2">
-    {% if blog.video %}
-        <video width="100%" height="100%" controls>
-            <source src="{{ blog.video.url }}" type="video/mp4">
-        </video>
-    {% else %}
-        <!-- No video available -->
-    {% endif %}
-</div>
+
+
 </section>
 
                 <div class="meta-bottom">

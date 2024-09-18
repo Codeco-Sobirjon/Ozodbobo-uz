@@ -39,7 +39,7 @@ class Blog(models.Model):
                                       related_name="Category", verbose_name=_('Выбрать категорию'))
     created_at = models.DateField(auto_now_add=True, verbose_name=_("Дата публикации"))
     url = models.URLField(verbose_name="URL", null=True, blank=True)
-    video = models.FileField(upload_to='video/', null=True, blank=True, validators=[validate_video_size])
+    video = models.URLField(verbose_name='URL-видео', null=True, blank=True)
     translatable_fields = ['title', 'description']
 
     objects = models.Manager()
