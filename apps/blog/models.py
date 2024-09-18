@@ -7,12 +7,12 @@ from django.core.exceptions import ValidationError
 def validate_video_size(value):
     file_size = value.size
     max_size_mb = 70 * 1024 * 1024  # 70 MB in bytes
-    min_size_mb = 10 * 1024 * 1024  # 10 MB in bytes
+    min_size_mb = 2 * 1024 * 1024  # 10 MB in bytes
 
     if file_size > max_size_mb:
         raise ValidationError(_("Максимальный размер загружаемого файла составляет 70 МБ."))
     elif file_size < min_size_mb:
-        raise ValidationError(_("Минимальный размер загружаемого файла составляет 10 МБ."))
+        raise ValidationError(_("Минимальный размер загружаемого файла составляет 2 МБ."))
 
 
 class Categories(models.Model):
@@ -38,6 +38,7 @@ class Blog(models.Model):
     category = models.ManyToManyField(Categories, null=True, blank=True,
                                       related_name="Category", verbose_name=_('Выбрать категорию'))
     created_at = models.DateField(auto_now_add=True, verbose_name=_("Дата публикации"))
+    url = models.URLField(verbose_name="URL", null=True, blank=True)
     video = models.FileField(upload_to='video/', null=True, blank=True, validators=[validate_video_size])
     translatable_fields = ['title', 'description']
 

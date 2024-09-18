@@ -65,6 +65,12 @@
                   <p>
                      {{ blog.description }}
                   </p>
+                   <div class="meta-section">
+    <a href="{{ blog.url }}" target="_blank" class="blog-url-link">
+      <i class="bi bi-link"></i> <!-- Change to a link icon if necessary -->
+      {{ blog.url }}
+    </a>
+  </div>
                   <blockquote>
                     <p>
                       Biz va bizning jamoamiz bilan sizning tadbirkorligingizni rivojlantiramiz va uni omaga ko'rsatib beramiz.
@@ -109,6 +115,15 @@
       <div class="swiper-pagination"></div>
     </div>
   </div>
+                    <div class="container mt-2">
+    {% if blog.video %}
+        <video width="100%" height="100%" controls>
+            <source src="{{ blog.video.url }}" type="video/mp4">
+        </video>
+    {% else %}
+        <!-- No video available -->
+    {% endif %}
+</div>
 </section>
 
                 <div class="meta-bottom">
@@ -127,7 +142,10 @@
                   <i class="bi bi-chat-dots"></i>
                   <ul class="tags">
                     <li>{{blog_comment_count}}</li>
+
+
                   </ul>
+
                 </div><!-- End meta bottom -->
 
               </article>

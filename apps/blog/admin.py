@@ -39,7 +39,7 @@ class BlogAdmin(admin.ModelAdmin):
     inlines = [BlogImageInline]
 
     # Adding the video field to be displayed in the admin form
-    fields = ('title', 'description', 'is_seen', 'category', 'video')
+    fields = ('title', 'description', 'is_seen', 'category', 'video', 'url')
 
     def get_categories(self, obj):
         return ", ".join([category.name for category in obj.category.all()])
