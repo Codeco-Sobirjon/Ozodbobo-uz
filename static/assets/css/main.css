@@ -179,10 +179,18 @@ h6 {
   font-size: 16px;
 }
 
-.header .header-social-links a:hover {
-  color: var(--accent-color);
+.header .header-social-links .instagram:hover {
+  color: #fccc63;
 }
-
+.header .header-social-links .telegram:hover {
+  color: #0088cc;
+}
+.header .header-social-links .youtube:hover {
+  color: #FF0000;
+}
+.header .header-social-links .facebook:hover {
+  color: #1877F2;
+}
 .header .header-social-links a i {
   line-height: 0px;
 }
@@ -753,6 +761,7 @@ section,
   align-items: flex-end;
   background-repeat: no-repeat;
   background-size: cover;
+  object-fit: cover,
 }
 
 .slider .swiper-slide::before {

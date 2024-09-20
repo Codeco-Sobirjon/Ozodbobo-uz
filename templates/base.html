@@ -43,8 +43,8 @@
       <nav id="navmenu" class="navmenu">
         <ul>
 			{% for cat in categories %}
-          <li><a href="{% url 'category' cat.id %}" target="_blank" class="active">{{ cat.name }}</a></li>
-			{% endfor %}
+    <li><a href="{% url 'category' cat.id %}" target="_blank" class="active" style="font-family: 'Lucida Console', 'Courier New', monospace;">{{ cat.name }}</a></li>
+{% endfor %}
 
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>

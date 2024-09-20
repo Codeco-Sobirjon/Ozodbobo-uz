@@ -130,3 +130,8 @@ def commentPageView(request, id):
         return HttpResponseRedirect(reverse('detail-blog', args=[blog_detail.id]))
 
     return HttpResponseRedirect(reverse('detail-blog', args=[blog_detail.id]))
+
+
+def passs(request):
+
+    pass

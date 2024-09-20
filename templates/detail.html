@@ -68,18 +68,25 @@
                   <div class="container mt-3">
   <div class="row align-items-center">
     <div class="col d-flex align-items-center">
-      <i class="bi bi-link me-2"></i> <!-- Link icon with right margin -->
+       <!-- Link icon with right margin -->
+      {% if blog.url %}
+      <i class="bi bi-link me-2"></i>
       <a href="{{ blog.url }}" target="_blank" class="blog-url-link">
         {{ blog.url }}
       </a>
+      {% else %}
+      <span></span>
+      {% endif %}
+
     </div>
     <div class="col d-flex align-items-center">
-      <i class="bi bi-film me-2"></i> <!-- Film icon with right margin -->
+       <!-- Film icon with right margin -->
       {% if video_url %}
+      <i class="bi bi-film me-2"></i>
         <a href="{{ video_url }}" target="_blank" class="video-link">Vedioni ko'rish</a>
       {% else %}
         <!-- No video available -->
-        <span>No video available</span>
+        <span></span>
       {% endif %}
     </div>
   </div>
@@ -89,8 +96,8 @@
 
                   <blockquote>
                     <p>
-                      Biz va bizning jamoamiz bilan sizning tadbirkorligingizni rivojlantiramiz va uni omaga ko'rsatib beramiz.
-                      Biz "Business Show Case" jamoam sizni albatta kutib qolamiz. Bizning qo'limizdan kelishi mumkin bo'lgan ishlar.
+                      Biz jamoamiz bilan sizning tadbirkorligingizni rivojlantiramiz va uni ta'rgibot qilamiz.
+                      Biz "Business Show Case" jamoamiz sizni albatta kutib qolamiz. Biz quydagi xizmarlarni amalga oshiramiz.
                     </p>
                   </blockquote>
                   <section id="slider" class="slider section dark-background">
