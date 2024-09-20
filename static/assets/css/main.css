@@ -498,10 +498,20 @@ h6 {
   transition: 0.3s;
 }
 
-.footer .social-links a:hover {
-  color: var(--accent-color);
-  border-color: var(--accent-color);
+.footer .social-links .instagram:hover {
+  color: #fccc63;
 }
+.footer .social-links .telegram:hover {
+  color: #0088cc;
+}
+.footer .social-links .youtube:hover {
+  color: #FF0000;
+}
+.footer .social-links .facebook:hover {
+  color: #1877F2;
+}
+
+
 
 .footer h4 {
   font-size: 16px;
@@ -1942,8 +1952,17 @@ section,
   font-size: 18px;
 }
 
-.blog-author-widget .social-links a:hover {
-  color: var(--accent-color);
+.blog-author-widget  .social-links .instagram:hover {
+  color: #fccc63;
+}
+.blog-author-widget  .social-links .telegram:hover {
+  color: #0088cc;
+}
+.blog-author-widget  .social-links .youtube:hover {
+  color: #FF0000;
+}
+.blog-author-widget  .social-links .facebook:hover {
+  color: #1877F2;
 }
 
 .blog-author-widget p {
