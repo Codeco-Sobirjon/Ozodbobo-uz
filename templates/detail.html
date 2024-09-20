@@ -274,7 +274,7 @@
               <h3 class="widget-title">So'ngi bloglar</h3>
               {% for last in last_blog %}
               <div class="post-item">
-                <img src="{{ last.images.image.url }}" alt="" class="flex-shrink-0">
+                <img src="{{ last.images.image.url }}" style="width: 100%; height: 100%; object-fit:cover;" alt="" class="flex-shrink-0">
                 <div>
                   <h4><a href="{% url 'detail-blog' last.blog.id %}">{{ last.blog.title }}</a></h4>
                   <time datetime="2020-01-01">{{ last.blog.created_at|date:"Y-m-d" }}</time>
