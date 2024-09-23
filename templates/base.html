@@ -26,13 +26,14 @@
 
   <!-- Main CSS File -->
   <link href="{% static 'assets/css/main.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/css/social.css' %}" rel="stylesheet">
 
 </head>
 
 <body class="index-page">
 
   <header id="header" class="header d-flex align-items-center sticky-top">
-    <div class="container position-relative d-flex align-items-center justify-content-between">
+    <div class="container position-relative d-flex align-items-center justify-content-between ">
 
       <a href="{% url 'home' %}" class="logo d-flex align-items-center me-auto me-xl-0">
         <!-- Uncomment the line below if you also wish to use an image logo -->
@@ -40,12 +41,12 @@
         <h1 class="sitename">Ozodbobo.uz</h1>
       </a>
 
-      <nav id="navmenu" class="navmenu">
+      <nav id="navmenu" class="navmenu ">
         <ul>
 			{% for cat in categories %}
-    <li><a href="{% url 'category' cat.id %}" target="_blank" class="active" style="font-family: 'Lucida Console', 'Courier New', monospace;">{{ cat.name }}</a></li>
+    <li><a href="{% url 'category' cat.id %}" target="_blank" class="active" style="font-family: Manrope Variable, sans-serif !important;">{{ cat.name }}</a></li>
 {% endfor %}
-    <li><a href="static/bobo/Guvohnoma.jpg" target="_blank" class="active" style="font-family: 'Lucida Console', 'Courier New', monospace;">Litsenziya</a></li>
+    <li><a href="static/bobo/Guvohnoma.jpg" target="_blank" class="active" style="font-family: Manrope Variable, sans-serif !important;">Litsenziya</a></li>
 
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
@@ -58,7 +59,10 @@
 		<a href="https://t.me/ozodolimovich" target="_blank" class="telegram"><i class="bi bi-telegram"></i></a>
 	</div>
     </div>
+
   </header>
+
+
 
   <main class="main">
 
