@@ -1,4 +1,4 @@
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 
@@ -132,6 +132,11 @@ def commentPageView(request, id):
     return HttpResponseRedirect(reverse('detail-blog', args=[blog_detail.id]))
 
 
-def passs(request):
+def searchView(request):
+    query = request.GET.get('q', '')
+    if query:
+        search_results = Blog.objects.filter(title__icontains=query)
+        results = [{'id': item.id, 'title': item.title} for item in search_results]
+        return JsonResponse({'results': results})
+    return JsonResponse({'results': []})
 
-    pass

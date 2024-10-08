@@ -7,7 +7,8 @@ urlpatterns = [
     path('', indexPageView, name='home'),
     path('category/<int:id>/', categoryPageView, name='category'),
     path('detail/<int:id>/', detailPageView, name='detail-blog'),
-    path('comment/<int:id>/', commentPageView, name='comment-blog')
+    path('comment/<int:id>/', commentPageView, name='comment-blog'),
+    path('search/', searchView, name='search_results'),
 ]
 
 

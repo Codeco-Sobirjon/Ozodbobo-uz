@@ -255,6 +255,9 @@ h6 {
   .navmenu li:last-child a {
     padding-right: 0;
   }
+  .navmenu a:hover {
+    color: red; /* Change the color to red on hover */
+}
 
   .navmenu li:hover>a,
   .navmenu .active,

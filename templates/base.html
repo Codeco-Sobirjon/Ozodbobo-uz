@@ -27,7 +27,24 @@
   <!-- Main CSS File -->
   <link href="{% static 'assets/css/main.css' %}" rel="stylesheet">
   <link href="{% static 'assets/css/social.css' %}" rel="stylesheet">
+    <style>
+        #search-results {
+    max-height: 300px;
+    overflow-y: auto;
+        }
+        .list-group-item {
+            border: none;
+            padding: 10px;
+        }
+        .search-icon {
+    color: black; /* Default color */
+    transition: color 0.3s ease; /* Smooth transition */
+}
 
+.search-icon:hover {
+    color: red; /* Change to your desired hover color */
+}
+    </style>
 </head>
 
 <body class="index-page">
@@ -35,36 +52,64 @@
   <header id="header" class="header d-flex align-items-center sticky-top">
     <div class="container position-relative d-flex align-items-center justify-content-between ">
 
-      <a href="{% url 'home' %}" class="logo d-flex align-items-center me-auto me-xl-0">
-        <!-- Uncomment the line below if you also wish to use an image logo -->
-        <!-- <img src="assets/img/logo.png" alt=""> -->
-        <h1 class="sitename">Ozodbobo.uz</h1>
-      </a>
+        <a href="{% url 'home' %}" class="logo d-flex align-items-center me-auto me-xl-0">
+            <h1 class="sitename" style="font-family: 'Comic Sans MS', cursive !important;">Ozodbobo.uz</h1>
+        </a>
 
-      <nav id="navmenu" class="navmenu ">
-        <ul>
-			{% for cat in categories %}
-    <li><a href="{% url 'category' cat.id %}" target="_blank" class="active" style="font-family: Manrope Variable, sans-serif !important;">{{ cat.name }}</a></li>
-{% endfor %}
-    <li><a href="static/bobo/Guvohnoma.jpg" target="_blank" class="active" style="font-family: Manrope Variable, sans-serif !important;">Litsenziya</a></li>
+        <nav id="navmenu" class="navmenu ">
+            <ul>
+                {% for cat in categories %}
+                <li>
+                    <a href="{% url 'category' cat.id %}" class="active"
+                        style="font-family: 'Comic Sans MS', cursive !important;">{{ cat.name }}</a>
+                </li>
+                {% endfor %}
+                <li><a href="{% static 'bobo/Guvohnoma.jpg' %}" target="_blank" class="active"
+                        style="font-family: Manrope Variable, sans-serif !important;">Litsenziya</a></li>
+            </ul>
+            <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+        </nav>
 
-        </ul>
-        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-      </nav>
+        <div class="header-social-links d-flex align-items-center">
+            <!-- Search Icon -->
+            <a href="#" class="search-icon" data-bs-toggle="modal" data-bs-target="#searchModal">
+                <i class="bi bi-search"></i>
+            </a>
 
-      <div class="header-social-links">
-		<a href="https://www.instagram.com/ozod_yuliyev/" target="_blank" class="instagram"><i class="bi bi-instagram"></i></a>
-		<a href="https://facebook.com/people/%D0%9E%D0%B7%D0%BE%D0%B4-%D0%AE%D0%BB%D0%B8%D0%B5%D0%B2/pfbid02ELdZQMQCjGLuQzP9Kyn8GNWu4E1v437TgHd9B9rQUdQLxubDCfvWkj7czjWbqYSNl/?mibextid=qi2Omg&rdid=Ep5IjMszOKDBh0Y5&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F2G19uhgQfuixJ2JN%2F%3Fmibextid%3Dqi2Omg"  target="_blank" class="facebook"><i class="bi bi-facebook"></i></a>
-		<a href="https://www.youtube.com/@ozodbobouz" target="_blank" class="youtube"><i class="bi bi-youtube"></i></a>
-		<a href="https://t.me/ozodolimovich" target="_blank" class="telegram"><i class="bi bi-telegram"></i></a>
-	</div>
+            <!-- Social Media Links -->
+            <a href="https://www.instagram.com/ozod_yuliyev/" target="_blank" class="instagram"><i
+                    class="bi bi-instagram"></i></a>
+            <a href="https://facebook.com/people/%D0%9E%D0%B7%D0%BE%D0%B4-%D0%AE%D0%BB%D0%B8%D0%B5%D0%B2/pfbid02ELdZQMQCjGLuQzP9Kyn8GNWu4E1v437TgHd9B9rQUdQLxubDCfvWkj7czjWbqYSNl/?mibextid=qi2Omg"
+                target="_blank" class="facebook"><i class="bi bi-facebook"></i></a>
+            <a href="https://www.youtube.com/@ozodbobouz" target="_blank" class="youtube"><i
+                    class="bi bi-youtube"></i></a>
+            <a href="https://t.me/ozodolimovich" target="_blank" class="telegram"><i class="bi bi-telegram"></i></a>
+        </div>
     </div>
-
-  </header>
-
+</header>
+  <!-- Search Modal -->
+<div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="searchModalLabel">Qidirish</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Qidiruv..." name="q" id="search-input" aria-label="Search">
+                </div>
+                <div id="search-results" class="mt-3">
+                    <!-- Search results will be dynamically inserted here -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 
   <main class="main">
+
 
     {% block blockmain %}
 
@@ -77,11 +122,19 @@
       <div class="row gy-4">
         <div class="col-lg-4 col-md-6 footer-about">
           <a href="index.html" class="logo d-flex align-items-center">
-            <span class="sitename">Ozodbobo.</span>
+            <span class="sitename" style="font-family: 'Comic Sans MS', cursive !important;">Ozodbobo.uz</span>
           </a>
           <div class="footer-contact pt-3">
-            <p class="mt-3"><strong>Murojat uchun:</strong> <span>+998 99 700 60 56</span></p>
-            <p><strong>Email:</strong> <span>yuliev.ozod@mail.ru</span></p>
+            <p class="mt-3"><strong style="font-family: 'Comic Sans MS', cursive !important;">Murojat uchun:</strong> </p>
+            <div class="row">
+              <div class="col">
+                <span style="font-family: 'Comic Sans MS', cursive !important;">+998 99 700 60 56</span>
+              </div>
+              <div class="col">
+                <span style="font-family: 'Comic Sans MS', cursive !important;">+998 99 502 17 71</span>
+              </div>
+            </div>
+            <p><strong style="font-family: 'Comic Sans MS', cursive !important;">Email:</strong> <span style="font-family: 'Comic Sans MS', cursive !important;">yuliev.ozod@mail.ru</span></p>
           </div>
           <div class="social-links d-flex mt-4">
             <a href="https://www.instagram.com/ozod_yuliyev/" target="_blank" class="instagram"><i class="bi bi-instagram"></i></a>
@@ -92,7 +145,7 @@
         </div>
 
         <div class="col-lg-8 col-md-3 footer-links">
-          <h4>Manzil: </h4>
+          <h4 style="font-family: 'Comic Sans MS', cursive !important;">Manzil: </h4>
           <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d191.6649937875041!2d64.42781009860039!3d39.77019276357308!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2s!4v1726136168836!5m2!1sen!2s" width="100%" height="200" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
 
@@ -100,7 +153,7 @@
     </div>
 
     <div class="container copyright text-center mt-4">
-      <p>© <span>Mualliflik huquqi</span> <strong class="px-1 sitename">Ozodbobo</strong> <span>Barcha huquqlar himoyalangan</span></p>
+      <p>© <span style="font-family: 'Comic Sans MS', cursive !important;">Mualliflik huquqi</span> <strong class="px-1 sitename" style="font-family: 'Comic Sans MS', cursive !important;">Ozodbobo</strong> <span style="font-family: 'Comic Sans MS', cursive !important;">Barcha huquqlar himoyalangan</span></p>
       <div class="credits">
         <!-- All the links in the footer should remain intact. -->
         <!-- You can delete the links only if you've purchased the pro version. -->
@@ -113,10 +166,50 @@
   </footer>
 
   <!-- Scroll Top -->
-  <a href="#" target="_blank" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+ <a href="#" target="_blank" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
   <!-- Preloader -->
   <div id="preloader"></div>
+
+  <script>
+let searchTimeout = null;
+
+document.getElementById('search-input').addEventListener('input', function() {
+    const query = this.value;
+
+    // Clear any previously set timeout to prevent unnecessary requests
+    if (searchTimeout) {
+        clearTimeout(searchTimeout);
+    }
+
+    // Only proceed if the query length is greater than 2 characters
+    if (query.length > 2) {
+        // Set a small delay to debounce the request
+        searchTimeout = setTimeout(function() {
+            fetch(`https://ozodbobo.uz/search/?q=${encodeURIComponent(query)}`)
+                .then(response => response.json())
+                .then(data => {
+                    let resultsContainer = document.getElementById('search-results');
+                    resultsContainer.innerHTML = '';  // Clear previous results
+
+                    if (data.results.length > 0) {
+                        data.results.forEach(item => {
+                            let resultItem = `<a href="https://ozodbobo.uz/detail/${item.id}/" class="list-group-item list-group-item-action">${item.title}</a>`;
+                            resultsContainer.innerHTML += resultItem;
+                        });
+                    } else {
+                        resultsContainer.innerHTML = '<p class="text-muted">Ma\'lumot topilmadi</p>';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching search results:', error);
+                });
+        }, 300);  // 300ms delay for debouncing
+    } else {
+        document.getElementById('search-results').innerHTML = '';  // Clear results if the query is too short
+    }
+});
+</script>
 
   <!-- Vendor JS Files -->
   <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
